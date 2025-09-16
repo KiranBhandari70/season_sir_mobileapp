@@ -33,6 +33,40 @@ class _Lab1State extends State<Lab1> {
               ),
               const SizedBox(height:40),
 
+              //Sign in Box
+              Container(
+                padding: const EdgeInsets.all(20), //padding for the orange box size
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Sign In", style: TextStyle(fontSize:22, fontWeight: FontWeight.bold, color:Colors.black,),
+                    ),
+                   const SizedBox(height: 20), //below the text space
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  ]
+                )
+              )
+
 
 
 
