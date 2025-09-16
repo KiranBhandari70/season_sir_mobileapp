@@ -1,8 +1,5 @@
-import "package:season_sir_mobileapp/loginpage.dart";
 import 'package:flutter/material.dart';
-
 import 'Lab1.dart';
-import 'dashboard.dart';
 
 void main() {
   runApp(const MyApp());
