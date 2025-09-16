@@ -81,6 +81,29 @@ class _Lab1State extends State<Lab1> {
                     ),
                     const SizedBox(height: 20),
 
+                    //Sign In Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {}, // it means no action
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+
+
 
 
 
