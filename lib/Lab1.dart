@@ -102,28 +102,27 @@ class _Lab1State extends State<Lab1> {
                         ),
                       ),
                     ),
+                   const SizedBox(height: 20),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Sign Up",
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),
+                        ),
+                        SizedBox(width: 10),
+                        Text("|"),
+                        SizedBox(width: 10),
+                        Text(
+                          "Forget Password?",
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),
+                        ),
+                      ],
+                    ),
                   ]
                 )
               )
-
-
-
-
             ]
 
           )
