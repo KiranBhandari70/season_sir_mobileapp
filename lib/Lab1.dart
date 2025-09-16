@@ -49,7 +49,38 @@ class _Lab1State extends State<Lab1> {
                     ),
                    const SizedBox(height: 20), //below the text space
 
-                    
+                    //Email Text Field
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                        filled:true,
+                        fillColor:Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(vertical:15, horizontal:20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                          borderSide: BorderSide.none,
+                        )
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+
+                    // Password TextField
+                    TextField(
+                     // obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: "Password",
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
 
 
 
