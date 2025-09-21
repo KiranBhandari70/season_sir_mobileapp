@@ -66,37 +66,43 @@ class _dashboardState extends State<dashboard> {
             child: Column(
               children: [
 
-                Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 100,
-                          width: 120,
-                          decoration: BoxDecoration(color: Colors.green),
-                        ),
-                        Icon(Icons.play_circle,color: Colors.white,size: 40,)
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text("Heading 1"),
-                        Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(15)
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 120,
+                            decoration: BoxDecoration(color: Colors.green),
+                          ),
+                          Icon(Icons.play_circle,color: Colors.white,size: 40,)
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Heading 1", style: TextStyle(font)),
+                          Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(15)
+                                ),
+                                padding: EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 10),
+                                child: Text("button",style: TextStyle(color: Colors.white),),
                               ),
-                              padding: EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 10),
-                              child: Text("button",style: TextStyle(color: Colors.white),),
-                            ),
-                            Text("sept 10 2025",style: TextStyle(color: Colors.black),),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+                              Text("sept 10 2025",style: TextStyle(color: Colors.black),),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
