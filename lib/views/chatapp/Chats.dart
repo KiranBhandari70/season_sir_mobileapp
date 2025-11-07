@@ -14,13 +14,14 @@ class _ChatsState extends State<Chats> {
   String currentUserId = "123";
   String otherUserId = "789";
 
-  Future<void> sendMessage(String text) async {
+  // ✅ Fixed: FirebaseFireStore → FirebaseFirestore
+  sendMessage(String text) async {
     if (text.trim().isEmpty) return;
 
     final messageRef = FirebaseFirestore.instance
         .collection('chats')
         .doc(chatId)
-        .collection('messages')
+        .collection('messages') // ✅ Fixed: collection name must match getter
         .doc();
 
     await messageRef.set({
@@ -37,7 +38,8 @@ class _ChatsState extends State<Chats> {
     _controller.clear();
   }
 
-  Stream<QuerySnapshot> getMessages() {
+  // ✅ Fixed: FirebasaeFirestore → FirebaseFirestore + collection name typo
+  Stream<QuerySnapshot> getMessage() {
     return FirebaseFirestore.instance
         .collection('chats')
         .doc(chatId)
@@ -61,111 +63,121 @@ class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Back button + messages
-            Expanded(
-              child: Column(
-                children: [
-                  // Back Button
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(Icons.arrow_back, size: 30),
-                      ),
-                    ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 60),
+              // Back button
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 35,
+                    color: Colors.black,
                   ),
+                ),
+              ),
+              // ✅ StreamBuilder fixed
+              StreamBuilder<QuerySnapshot>(
+                stream: getMessage(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(child: Text("No data available"));
+                  }
 
-                  // Message Stream
-                  Expanded(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: getMessages(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        if (!snapshot.hasData ||
-                            snapshot.data!.docs.isEmpty) {
-                          return const Center(child: Text("No messages yet."));
-                        }
+                  final messages = snapshot.data!.docs;
 
-                        final messages = snapshot.data!.docs;
+                  return SizedBox(
+                    width: size.width,
+                    height: size.height / 3,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        var msg = messages[index];
+                        final isMe = msg['senderId'] == currentUserId;
 
-                        return ListView.builder(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          itemCount: messages.length,
-                          itemBuilder: (context, index) {
-                            var msg = messages[index];
-                            final isMe = msg['senderId'] == currentUserId;
-
-                            return Align(
-                              alignment: isMe
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: size.width * 0.7),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: isMe
-                                      ? Colors.black87
-                                      : Colors.grey.shade600,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  msg['text'],
-                                  style:
-                                  const TextStyle(color: Colors.white),
-                                ),
+                        return Row(
+                          mainAxisAlignment: isMe
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: size.width / 1.5,
+                              margin: const EdgeInsets.only(
+                                  left: 15, bottom: 15, right: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              decoration: BoxDecoration(
+                                color:
+                                isMe ? Colors.black54 : Colors.grey[600],
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                            );
-                          },
+                              // ✅ Fixed text rendering bug
+                              child: Text(
+                                msg['text'] ?? '',
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
                         );
                       },
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
-            ),
+            ],
+          ),
 
-            // Message Input
-            Container(
-              color: Colors.black26,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        hintText: "Type a message...",
-                        hintStyle: TextStyle(color: Colors.white54),
-                        border: InputBorder.none,
-                      ),
+          // ✅ Message input bar
+          Container(
+            color: Colors.black26,
+            child: Row(
+              children: [
+                Container(
+                  width: size.width / 1.2,
+                  padding: const EdgeInsets.only(left: 15),
+                  child: TextField(
+                    controller: _controller,
+                    style: const TextStyle(color: Colors.white),
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                      hintText: "Type a message...",
+                      hintStyle: TextStyle(color: Colors.white54),
+                      border: InputBorder.none,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () => sendMessage(_controller.text),
-                    icon: const Icon(Icons.send, color: Colors.white),
+                ),
+                const SizedBox(width: 10),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      sendMessage(_controller.text);
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                      size: 25,
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

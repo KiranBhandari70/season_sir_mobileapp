@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:season_sir_mobileapp/firebase_options.dart';
+import 'package:season_sir_mobileapp/views/maps/mapspage.dart';
 import 'views/news/dashboard.dart';
 import 'views/chatapp/Chats.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  Chats(),
+      home:  Mapspage(),
     );
   }
 }
