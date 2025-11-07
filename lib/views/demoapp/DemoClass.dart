@@ -10,7 +10,7 @@ class democlass2 extends StatefulWidget{
 }
 class democlass2State extends State<democlass2>{
 
-  demofunc(size, String title){
+  Row demofunc(size, String title){
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
