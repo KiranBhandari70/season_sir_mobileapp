@@ -14,9 +14,27 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
 
-  Stack horizontalcard(size,heading, date, String url){
-    return  Stack(
-      children: [
+   horizontalcard(size,heading, date, String url){
+    return  GestureDetector(
+      onTap:() {
+        EsewaPayButton(
+          paymentConfig: ESewaConfig.dev(
+            amount: 100.0,
+            successUrl: 'https://developer.esewa.com.np/success',
+            failureUrl: 'https://developer.esewa.com.np/failure',
+            secretKey: 'static.secretkey',
+            // productCode: 'EPAYTEST', // optional for dev (defaults to EPAYTEST)
+          ),
+          onSuccess: (resp) {
+            // resp.data is base64 string
+            print('Success base64: ${resp.data}');
+          },
+          onFailure: (message) {
+            print('Failed: $message');
+          },
+        ),
+      },
+      child:stack [
         Container(
             margin: EdgeInsets.only(left: 15),
             height: size.height/5,
