@@ -6,16 +6,15 @@ import 'package:esewa_flutter/esewa_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'detailpage.dart';
 
-class dashboard extends StatefulWidget {
-  const dashboard({super.key});
+class gridviewdashboard extends StatefulWidget {
+  const gridviewdashboard({super.key});
 
   @override
-  State<dashboard> createState() => _dashboardState();
+  State<gridviewdashboard> createState() => _gridviewdashboardState();
 }
 
-class _dashboardState extends State<dashboard> {
+class _gridviewdashboardState extends State<gridviewdashboard> {
   Future<void> _launchInBrowser(Uri url) async {
     if (!await launchUrl(
       url,
@@ -193,9 +192,12 @@ class _dashboardState extends State<dashboard> {
                     Newsapi? data  = snapshot.data;
                     List<Articles> articles = data!.articles!;
                     return Container(
-                      height: size.height/5,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
+                      height: size.height/2,
+                      child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
                         itemCount: articles.length,
                         itemBuilder: (BuildContext context, int index) {
                           return horizontalcard(size, articles[index].title,

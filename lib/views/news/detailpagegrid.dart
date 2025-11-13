@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import '../../api/newsapicall.dart';
 import '../../model/newsapi.dart';
 
-class detailpage extends StatefulWidget {
-  const detailpage({super.key});
+class detailpagegrid extends StatefulWidget {
+  const detailpagegrid({super.key});
 
   @override
-  State<detailpage> createState() => _detailpageState();
+  State<detailpagegrid> createState() => _detailpagegridState();
 }
 
-class _detailpageState extends State<detailpage> {
+class _detailpagegridState extends State<detailpagegrid> {
 
   verticalcard(size, String heading,author, date, String url,
       Articles? article ){
@@ -20,18 +20,18 @@ class _detailpageState extends State<detailpage> {
         StaticValue.clickedarticle = article;
         Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (context) => detailpage(),
+            builder: (context) => detailpagegrid(),
           ),
         );
       },
       child: Container(
         padding: EdgeInsets.only(top: 10,left: 10),
-        child: Row(
+        child: Column(
           children: [
             Stack(
               children: [
                 Container(
-                    height: 100,
+                    height: 60,
                     width: 150,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15)
@@ -42,7 +42,7 @@ class _detailpageState extends State<detailpage> {
                         fit: BoxFit.cover,),
                     )),
                 Container(
-                  height: 100,
+                  height: 60,
                   width: 150,
                   decoration: BoxDecoration(
                     // color: Colors.green,
@@ -67,7 +67,7 @@ class _detailpageState extends State<detailpage> {
                     overflow: TextOverflow.ellipsis,maxLines: 2,),
                 ),
                 SizedBox(height: 10,),
-                Row(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -193,9 +193,11 @@ class _detailpageState extends State<detailpage> {
                         List<Articles> articles = data!.articles!;
                         return Container(
                           height: size.height/1.4,
-                          child: ListView.builder(
+                          child: GridView.builder(
                             scrollDirection: Axis.vertical,
-                            itemCount: articles.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                            ),
                             padding: EdgeInsets.zero,
                             itemBuilder: (BuildContext context, int index) {
                               return verticalcard(size, articles[index].title!,
