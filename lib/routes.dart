@@ -1,7 +1,9 @@
 import 'package:season_sir_mobileapp/views/chatapp/Chats.dart';
 import 'package:season_sir_mobileapp/views/chatapp/conversations.dart';
+import 'package:season_sir_mobileapp/views/demoapp/SignInPage.dart';
 import 'package:season_sir_mobileapp/views/demoapp/loginpage.dart';
 import 'package:season_sir_mobileapp/views/esewatest/esewa.dart';
+import 'package:season_sir_mobileapp/views/gridview.dart';
 import 'package:season_sir_mobileapp/views/maps/mapspage.dart';
 import 'package:season_sir_mobileapp/views/news/dashboard.dart';
 import 'package:season_sir_mobileapp/views/news/detailpage.dart';
@@ -17,14 +19,18 @@ class AppRoute{
   static const String esewa = '/esewa';
   static const String maps = '/maps';
   static const String webview ='/webview';
+  static const String signup = '/signup';
+  static const String gridapppage = '/grid';
 
   static getAppRoutes() => {
+    signup: (context) => Signinpage(),
+    gridapppage: (context) => const Gridapp(),
     login: (context) => loginpage(),
     dashboardroute: (context) => const dashboard(),
     detailPage: (context) => const detailpage(),
     conversation: (context) => Conversations(),
     chats: (context) => Chats(),
-    esewa: (context) => EsewaApp(title: '',),
+    esewa: (context) => EsewaApp(title: 'PCPS',),
     maps: (context) => MapsPage(),
     webview: (context) => WebViewPage(),
   };
